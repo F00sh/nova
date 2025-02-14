@@ -1,6 +1,6 @@
 <template>
   <div class="-z-50 absolute">
-    <TresCanvas shadows :onCreated="onCreated" clear-color="#82DBC5" window-size>
+    <TresCanvas shadows :onCreated="on_created" clear-color="#82DBC5" window-size>
       <TresPerspectiveCamera :position="[0, 0, 5]" :look-at="[0, 0, 0]" />
 
       <TresMesh ref="cubeRef" :position="[0, 0, 0]" @pointer-enter="on_pointer_enter" @pointer-leave="on_pointer_leave">
@@ -34,7 +34,7 @@ const on_pointer_leave = () => {
   emissive.value = "#000000";
 };
 
-const onCreated = ({ renderer }: { renderer: THREE.WebGLRenderer }) => {
+const on_created = ({ renderer }: { renderer: THREE.WebGLRenderer }) => {
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
