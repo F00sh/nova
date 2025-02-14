@@ -1,18 +1,7 @@
 <template>
-  <div class="absolute 
-            bg-black 
-            -z-10 
-            flex flex-col items-center justify-center
-            w-screen h-screen 
-            text-amber-100">
-    <Hero />
-  </div>
+          <div>
+                    <h1 class="bg-blue-500 rounded-2xl m-3 p-3">Change me</h1>
+          </div>
 </template>
 
-<script lang="ts" setup>
-
-</script>
-
-<style>
-
-</style>
+<script setup lang="ts"></script>

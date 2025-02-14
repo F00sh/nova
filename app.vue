@@ -1,10 +1,11 @@
 <template>
-<div class="flex flex-col w-screen h-screen items-center justify-center">
-  <NuxtRouteAnnouncer />
-    <NuxtLayout>
-    <NuxtPage />
-  </NuxtLayout>
-</div>
+  <div class="relative w-screen h-screen overflow-hidden">
+    <div class="absolute inset-0 z-10 pointer-events-none">
+      <NuxtRouteAnnouncer />
+      <NuxtLayout>
+        <NuxtPage />
+      </NuxtLayout>
+    </div>
+  </div>
 </template>
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>
