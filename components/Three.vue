@@ -21,8 +21,8 @@ import * as THREE from "three";
 import { TresCanvas } from "@tresjs/core";
 
 const cubeRef = ref<THREE.Mesh>(null!);
-const color = ref("#00ff00");
-const emissive = ref("#000000");
+const color = ref<string>("#00ff00");
+const emissive = ref<string>("#000000");
 
 const on_pointer_enter = () => {
   color.value = "#ff0000";
