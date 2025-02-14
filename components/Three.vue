@@ -1,5 +1,5 @@
 <template>
-  <div class="-z-50 absolute">
+  <div>
     <TresCanvas shadows :onCreated="on_created" clear-color="#82DBC5" window-size>
       <TresPerspectiveCamera :position="[0, 0, 5]" :look-at="[0, 0, 0]" />
 
