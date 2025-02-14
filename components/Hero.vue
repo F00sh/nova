@@ -1,6 +1,6 @@
 <template>
   <div class="bg-emerald-400/30
-              w-screen h-full p-10
+              w-screen h-screen p-10
               flex flex-col items-center justify-center object-contain">
     
     <Three />
