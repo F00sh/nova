@@ -11,7 +11,7 @@ export default defineNuxtConfig({
   modules: ["@tresjs/nuxt"],
   css: ["~/assets/css/main.css"],
   vite: {
-    plugins: [tailwindcss()],
+    plugins: [tailwindcss(), aspectRatio()],
   },
   routeRules: {
     "/**": { prerender: true },
@@ -33,3 +33,24 @@ export default defineNuxtConfig({
     },
   },
 });
+
+function aspectRatio() {
+  return {
+    name: 'vite-plugin-aspect-ratio',
+    enforce: "pre" as "pre",
+    transform(code: string, id: string) {
+      if (id.endsWith('.css')) {
+        // Example transformation: Add aspect-ratio property to CSS
+        return code.replace(/aspect-ratio:\s*([\d.]+)\s*\/\s*([\d.]+);/g, (match: string, width: string, height: string) => {
+          const ratio = (parseFloat(width) / parseFloat(height)).toFixed(2);
+          return `aspect-ratio: ${ratio};`;
+        });
+      }
+      return code;
+    },
+  };
+}
+// function aspectRatio() {
+//   throw new Error("Function not implemented.");
+// }
+
