@@ -12,6 +12,7 @@ export default defineNuxtConfig({
   css: ["~/assets/css/main.css"],
   vite: {
     plugins: [tailwindcss(), aspectRatio()],
+    assetsInclude: ['**/*.glb'],
   },
   routeRules: {
     "/**": { prerender: true },

@@ -1,47 +1,56 @@
 <template>
   <div>
-    <TresCanvas shadows :onCreated="on_created" clear-color="#82DBC5" window-size>
-      <TresPerspectiveCamera :position="[0, 0, 5]" :look-at="[0, 0, 0]" />
-
-      <TresMesh ref="cubeRef" :position="[0, 0, 0]" @pointer-enter="on_pointer_enter" @pointer-leave="on_pointer_leave">
-        <TresSphereGeometry :args="[1, 32, 32]" />
-        <TresMeshStandardMaterial :color="color" :emissive="emissive" />
-      </TresMesh>
-
+    <TresCanvas shadows :onCreated="onCreated" clear-color="#82DBC5" window-size>
+      <TresPerspectiveCamera :position="[15, 10, 5]" :look-at="[0, 0, 0]" />
+      <Suspense>
+        <primitive v-if="scene" :object="scene" />
+      </Suspense>
       <TresDirectionalLight :position="[3, 5, 2]" :castShadow="true" :intensity="1" />
-
       <TresAmbientLight :intensity="1" />
     </TresCanvas>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onMounted, markRaw } from "vue";
 import * as THREE from "three";
-import { TresCanvas } from "@tresjs/core";
+import { useGLTF } from "@tresjs/cientos";
 
-const cubeRef = ref<THREE.Mesh>(null!);
-const color = ref<string>("#00ff00");
-const emissive = ref<string>("#000000");
+const scene = ref(null);
+let cube = null;
 
-const on_pointer_enter = () => {
-  color.value = "#ff0000";
-  emissive.value = "#000fff";
+onMounted(async () => {
+  const gltf = await useGLTF("/model/cube.glb");
+  scene.value = markRaw(gltf.scene);
+
+  console.log("Loaded Scene:", scene.value);
+
+  cube = scene.value.getObjectByName("Cube");
+  if (cube) {
+    console.log("Found Cube Mesh:", cube);
+
+    cube.material = new THREE.MeshStandardMaterial({
+      color: 0xff0000,
+      roughness: 0.5,
+      metalness: 0.1,
+    });
+
+    cube.castShadow = true;
+    cube.receiveShadow = true;
+
+    animate();
+  }
+});
+
+const animate = () => {
+  if (cube) {
+    cube.rotation.y += 0.01;
+  }
+  requestAnimationFrame(animate);
 };
 
-const on_pointer_leave = () => {
-  color.value = "#00ff00";
-  emissive.value = "#000000";
-};
-
-const on_created = ({ renderer }: { renderer: THREE.WebGLRenderer }) => {
+const onCreated = ({ renderer }) => {
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-
-  if (cubeRef.value) {
-    cubeRef.value.castShadow = true;
-  }
 };
 </script>
-
-<style scoped></style>
